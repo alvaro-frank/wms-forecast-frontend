@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import { apiService } from '../services/api';
-import type { ForecastRequest } from '../types';
+import type { ForecastRequest, HistoricalData } from '../types';
 
 export const useForecast = () => {
   const [predictedQuantity, setPredictedQuantity] = useState<number | null>(null);
+  const [historyData, setHistoryData] = useState<HistoricalData[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -11,10 +12,12 @@ export const useForecast = () => {
     setIsLoading(true);
     setError(null);
     setPredictedQuantity(null);
+    setHistoryData([]);
 
     try {
       const response = await apiService.predictDemand(requestData);
       setPredictedQuantity(response.predicted_quantity);
+      setHistoryData(response.history);
     } catch (err: any) {
       setError(err.message || 'Ocorreu um erro desconhecido.');
     } finally {
@@ -24,6 +27,7 @@ export const useForecast = () => {
 
   return {
     predictedQuantity,
+    historyData,
     isLoading,
     error,
     predict,
