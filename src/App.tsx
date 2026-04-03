@@ -1,5 +1,5 @@
 // src/App.tsx
-import React, { useMemo } from 'react';
+import { useMemo } from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, ReferenceDot, Legend } from 'recharts';
 import { useForecast } from './hooks/useForecast';
 import { ForecastForm } from './components/ForecastForm';
